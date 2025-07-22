@@ -1,4 +1,5 @@
 from pydantic_settings import BaseSettings
+from pydantic import Field
 
 class Settings(BaseSettings):
     redis_url: str = "redis://redis:6379/0"
@@ -8,9 +9,7 @@ class Settings(BaseSettings):
     s3_access_key: str = "minioadmin"
     s3_secret_key: str = "minioadmin"
     s3_bucket: str = "pdf-splits"
-    gemini_api_key: str = "your-gemini-api-key"
+    gemini_api_key: str
 
-    class Config:
-        env_file = ".env"
 
 settings = Settings()

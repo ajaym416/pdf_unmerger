@@ -2,13 +2,13 @@ from PyPDF2 import PdfReader, PdfWriter
 import pdfplumber
 import os, re
 from collections import defaultdict
-from app.core.config import settings
 from app.models.schemas import Continuity
 from google import genai
 from google.genai import types
 from pydantic import ValidationError
 import json
 from loguru import logger
+from app.core.config import settings
 
 client = genai.Client(api_key=settings.gemini_api_key)
 
@@ -63,6 +63,10 @@ def detect_continuity(page1_num_1_indexed,preceding_page_content,page2_num_1_ind
             thinking_budget=0,
         ),
         # tools=tools,
+        # Lower values reduce randomness and ensure deterministic output
+        temperature = 0.2,
+        # allows the model to generate complete most likely outputs
+        top_p=0.9,
         response_mime_type="application/json",
     )
     response = client.models.generate_content(

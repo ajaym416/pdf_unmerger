@@ -18,10 +18,6 @@ def clean_filename(text, max_words=5):
     return "_".join(words) if words else "document"
 
 def detect_continuity(page1_num_1_indexed,preceding_page_content,page2_num_1_indexed,following_page_content):
-    client = genai.Client(
-        api_key="AIzaSyBokwHUWBSpLVc-Wyy0RNAKZ4BjXbigc5w",
-    )
-
     model = "gemini-2.5-flash"
     prompt_text = f"""
     You are an expert document analysis AI. Your task is to determine if two provided text segments logically belong to consecutive pages of the same PDF document.

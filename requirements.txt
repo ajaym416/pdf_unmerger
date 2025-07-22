@@ -1,0 +1,12 @@
+google-genai==1.26.0
+loguru==0.7.3
+pdfplumber==0.11.7
+PyPDF2==3.0.1
+fastapi==0.116.1
+uvicorn==0.35.0
+celery==5.5.3
+redis==6.2.0
+boto3==1.39.10
+pydantic-settings==2.10.1
+python-multipart==0.0.20
+botocore==1.39.10

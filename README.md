@@ -58,5 +58,34 @@ docker compose up --build
 
 💡 MinIO access credentials are configured via environment variables — make sure to set them properly in your .env file.
 
+
+**System Architecture Diagram:**
+
+```mermaid
+flowchart TD
+    A["User"] --> B["React Frontend"]
+    B --> C["FastAPI Backend"]
+    C -- Upload Merged PDF --> D["Save to /tmp/uploads/"]
+    C -- Trigger Celery Task --> E["Redis Queue (Broker)"]
+    E --> F["Celery Worker"]
+    F -- Extract Layout/Text --> G["pdfplumber"]
+    F -- AI Split Decision --> H["Gemini 2.5 Flash API"]
+    F -- Split PDF --> I["PyPDF2"]
+    I -- Upload Split PDFs --> J["S3 / MinIO"]
+    C -- List Results API --> L(["/results/{task_id}"])
+    C -- Download API --> M(["/download/{filename}"])
+    L --> J
+    M --> J
+
+    A@{ shape: rounded}
+    B@{ shape: rounded}
+    D@{ shape: rounded}
+    E@{ shape: rounded}
+    G@{ shape: rounded}
+    H@{ shape: rounded}
+    I@{ shape: rounded}
+```
+
+
 🧑‍💻 Author
 Ajay Pyatha
